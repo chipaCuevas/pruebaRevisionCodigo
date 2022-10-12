@@ -1,0 +1,180 @@
+﻿<div class="col-sm-8">
+
+ 
+            <div class="row" ng-show="tiposTurno.length == 0">
+                <h4>SERVICIO CERRADO, SE HABILITARÁ MAÑANA A LAS 9:00 AM</h4>
+            </div>
+    <div class="panel panel-default">
+
+        <div class="panel-body" ng-show="tiposTurno.length > 0">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3>Reserva de cupo para el día {{fecha}}</h3>
+                    <small id="notaReserva" style="font-size:10px;">La reserva y modificación se podrá realizar hasta 10 minutos antes del inicio del turno</small>
+                </div>
+
+            </div>
+            <div class="row row-separacionx2">
+                <div class="col-sm-1">
+                    <h1><span class="label label-primary">1</span></h1>
+                </div>
+                <div class="col-sm-8">
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label for="txtRut">Rut</label>
+                            <!--<input class="form-control input-sm" type="number" ng-model="cupo.rut" name="txtRut" id="txtRut" min="1" required ng-blur="obtenerDatosUsuarios(cupo.rut)">-->
+                            <input class="form-control input-sm" type="number" ng-model="reserva.rut" name="txtRut" id="txtRut" min="1" required>
+                            <small id="notaRut" style="font-size:10px;"> *Ingrese rut sin puntos, sin guión y sin digito verificador.</small>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-7" style="margin-top:25px;">
+                        <!--<button class="btn btn-primary btn-sm" style="border: 1px solid lightgray;" type="button" ng-click="obtenerDatosUsuarios(reserva.rut)" ng-disabled="!reserva.rut">-->
+                        <button id="btnValidar" class="btn btn-primary btn-sm" style="border: 1px solid lightgray;" type="button" ng-click="validarUsuario(reserva.rut)" ng-disabled="!reserva.rut"
+                                data-loading-text="<i class='fa fa-spinner fa-spin'></i> Validando...">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Buscar
+                        </button>
+                        <button class="btn btn-secundary btn-sm" style="border: 1px solid lightgray;" type="button" ng-click="limpiar()" ng-disabled="!reserva.rut">
+                            <span class="glyphicon glyphicon-delete" aria-hidden="true"></span>&nbsp;Limpiar
+                        </button>
+                        <!--<button class="btn btn-danger btn-sm" style="border: 1px solid lightgray;" type="button" ng-click="eliminar(reserva.rut)" ng-disabled="!reserva.rut">
+                            <span  aria-hidden="true"></span>&nbsp;Anular
+                        </button>-->
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-show="vDatosUsuario.nombre">
+                <div class="col-sm-6 col-md-offset-1">
+                    <div class="col-sm-4">
+                        <label for="txtRut">Nombre</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-show="vDatosUsuario.nombre">
+                <div class="col-sm-6 col-md-offset-1">
+                    <div class="col-sm-12">
+                        {{vDatosUsuario.nombre}}
+                    </div>
+                </div>
+            </div>
+            <div class="row row-separacionx2" ng-show="vDatosUsuario.nombre && vDatosUsuario.parid">
+                <div class="col-sm-6  col-md-offset-1">
+                    <div class="col-sm-4">
+                        <label for="txtRut">Diputado</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-show="vDatosUsuario.nombre && vDatosUsuario.parid">
+                <div class="col-sm-6  col-md-offset-1">
+                    <div class="col-sm-12">
+                        {{vDatosUsuario.nombreDiputado}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-separacionx2" ng-show="vDatosUsuario.cantidadEmpleador == 2 && !editar"> 
+                <div class="col-sm-6  col-md-offset-1">
+                    <div class="col-sm-6">
+                        <label for="txtRut">Seleccione diputado</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-show="vDatosUsuario.cantidadEmpleador == 2 && !editar">
+                <div class="col-sm-6  col-md-offset-1">
+                    <div class="col-sm-12">
+                        <select class="form-control" ng-model="diputadoSeleccionado" ng-options="Empleador.Nombre for Empleador in empleadorConCupo track by Empleador.idDip" ng-change="changeEmpleador(diputadoSeleccionado)" required>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-separacionx3" ng-show="vDatosUsuario.nombre && tiposTurno.length == 0">
+                <div class="col-sm-6">
+                    <div class="col-sm-10">
+                        <div class="form-group">
+
+                            <label for="txtRut">No existen turnos disponibles</label>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-separacionx3" ng-show="vDatosUsuario.nombre && tiposTurno.length > 0">
+                <div class="col-sm-1">
+                    <h1><span class="label label-primary">2</span></h1>
+                </div>
+                <div class="col-sm-5">
+                    <label for="txtComedor" style="margin-left:14px;">Autoservicio piso 1</label>
+                    <!--<label for="txtDisp" style="margin-left:105px;">Ocupado</label>-->
+                    <div class="col-sm-12" ng-repeat="tipoTurno in tiposTurno | filter:{comedor : '1'}">
+
+                        <span>{{tipoTurno.horarioTurno}}</span>
+                        <button class="btn btn-primary btn-sm" style="border: 1px solid lightgray; margin-left:10px; width:90px; height:25px; border-radius:10px;" type="button" ng-click="guardarReserva(reserva,tipoTurno)" ng-show="vDatosUsuario.turnoReserva != tipoTurno.id">
+                            <span aria-hidden="true"></span>&nbsp;Reservar
+                        </button>
+                        <button class="btn btn-danger btn-sm" style="border: 1px solid lightgray; margin-left:10px; width:90px; height:25px; border-radius:10px;" type="button" ng-click="anularReserva(reserva.rut)" ng-show="vDatosUsuario.turnoReserva == tipoTurno.id">
+                            <span aria-hidden="true"></span>&nbsp;Anular
+                        </button>
+                        <!--<span style="margin-left:20px;">{{((tipoTurno.capacidad - tipoTurno.disponibilidad)*100)/tipoTurno.capacidad}}</span>%--> 
+                        <!--<div class="form-group">
+                            <label for="txtRut">Seleccione turno de almuerzo</label>
+                            <select class="form-control input-sm" name="cmbTipoTurno" id="cmbTipoTurno"
+                                    ng-options="tipoTurno as tipoTurno.horarioTurno for tipoTurno in tiposTurno"
+                                    ng-model="reserva.turno" ng-required="true" ng-disabled="readOnly || noEditable"></select>
+                        </div>-->
+                        <!--<label for="txtRut">Seleccione turno de almuerzo</label>
+                        <div class="col-sm-10" ng-repeat="tipoTurno in tiposTurno">
+                            <span>{{tipoTurno.horarioTurno}}</span>
+
+                        </div>-->
+
+
+                    </div>
+                </div>
+
+                <div class="col-sm-5">
+                    <label for="txtRut" style="margin-left:14px;">Autoservicio piso 14</label>
+                    <!--<label for="txtDisp" style="margin-left:105px;">Ocupado</label>-->
+                    <div class="col-sm-12" ng-repeat="tipoTurno2 in tiposTurno | filter:{comedor : '2'}">
+
+                        <span>{{tipoTurno2.horarioTurno}}</span>
+                        <button class="btn btn-success btn-sm" style="border: 1px solid lightgray; margin-left:10px; width:90px; height:25px; border-radius:10px;" type="button" ng-click="guardarReserva(reserva,tipoTurno2)" ng-show="vDatosUsuario.turnoReserva != tipoTurno2.id">
+                            <span aria-hidden="true"></span>&nbsp;Reservar
+                        </button>
+                        <button class="btn btn-danger btn-sm" style="border: 1px solid lightgray; margin-left:10px; width:90px; height:25px; border-radius:10px;" type="button" ng-click="anularReserva(reserva.rut)" ng-show="vDatosUsuario.turnoReserva == tipoTurno2.id">
+                            <span aria-hidden="true"></span>&nbsp;Anular
+                        </button>
+                       <!-- <span style="margin-left:20px;">{{((tipoTurno2.capacidad - tipoTurno2.disponibilidad)*100)/tipoTurno2.capacidad}}</span>%--> 
+                    </div>
+                </div>
+
+            </div>
+
+            <!--<div class="row row-separacionx2" ng-show="reserva.turno">
+                <div class="col-sm-1" ng-show="reserva.turno">
+                    <h1><span class="label label-primary">3</span></h1>
+                </div>
+                <div class="col-sm-6" style="margin-top:25px;">
+                    <div class="col-sm-6">
+                        <button class="btn btn-secudanry btn-sm" style="border: 1px solid lightgray;" type="button" ng-click="limpiar()" ng-disabled="!reserva.rut">
+                            <span class="glyphicon glyphicon-cancel" aria-hidden="true"></span>&nbsp;Cancelar
+                        </button>
+                    </div>
+
+
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary btn-sm" style="border: 1px solid lightgray;" type="button" ng-click="guardarReserva(reserva)" ng-disabled="!reserva.turno">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Guardar
+                        </button>
+                    </div>
+
+                </div>
+            </div>-->
+        </div>
+    </div>
+        </div>

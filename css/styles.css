@@ -1,0 +1,82 @@
+﻿#header {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #0e538c;
+    border-color: #0e538c;
+    background-image: url(/img/bg_header.png);
+    transition: background 0.5s ease 0s;
+    color: #ecf0f1;
+    text-decoration: solid;
+}
+
+.ta-editor.ta-html, .ta-scroll-window.form-control {
+  min-height: 250px !important;
+  max-height: 250px;
+}
+
+.verticalAlign td{
+    vertical-align: middle !important;
+}
+
+.center{
+    text-align: center;
+}
+
+.row-separacion{
+    margin-top: 5px;
+}
+
+.row-separacionx2{
+    margin-top: 10px;
+}
+
+.row-separacionx3{
+    margin-top: 20px;
+}
+
+h5{
+    font-size: 16px;
+}
+
+.sub-seguimiento{
+    font-size: 11px;
+}
+
+.bloque-seguimiento{
+    text-align: center;
+    width: 160px;
+    float: left;
+}
+
+.img-ok-seguimiento{
+    width: 65px;
+}
+
+.seg-inactivo{
+    opacity: 0.4;
+}
+
+.subt-header-modal{
+    font-size: 14px;
+}
+.item-lista {
+    padding: 5px 5px 5px 5px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    border: 1px solid silver;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.infoCampo {
+    width: 100%;
+    background-color: #eee;
+    padding-left: 4px;
+    border: 1px solid #ddd;
+    margin-bottom: 1px;
+}
+
+.infoDato {
+    padding: 5px;
+    border: 1px solid #ddd;
+}
